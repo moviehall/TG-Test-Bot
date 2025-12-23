@@ -1,21 +1,25 @@
+import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-BOT_TOKEN = "5314682898:AAFV1sF0ea_Y9H_g8XsysjGSKCdYOwAv21M"
+# Read token from environment variable instead of hardcoding
+BOT_TOKEN = os.environ.get("TOKEN", "")
 
-# /start command
+# Validate token exists
+if not BOT_TOKEN:
+    print("❌ ERROR: TOKEN environment variable is not set!")
+    exit(1)
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "👋 Hello!\nThis is a demo Telegram bot.\nSend me any message!"
     )
 
-# /help command
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "/start - Start the bot\n/help - Show help\n\nSend any text and I’ll echo it."
     )
 
-# Echo messages
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"🗣 You said: {update.message.text}")
 
