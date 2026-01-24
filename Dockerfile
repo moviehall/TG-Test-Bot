@@ -1,12 +1,14 @@
-FROM alpine:latest
+FROM debian:bookworm-slim
 
-RUN apk add --no-cache curl ca-certificates
+RUN apt-get update && apt-get install -y \
+    curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Download prebuilt llama-server binary
+# Download prebuilt llama-server (glibc-compatible)
 RUN curl -L -o llama-server \
-    https://github.com/ggml-org/llama.cpp/releases/download/b2670/llama-server-linux-x86_64 \
+    https://github.com/ggml-org/llama.cpp/releases/latest/download/llama-server-linux-x86_64 \
     && chmod +x llama-server
 
 # Download small GGUF model
