@@ -6,9 +6,9 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Download prebuilt llama-server (glibc-compatible)
+# Download ARM64 llama-server (THIS IS THE KEY FIX)
 RUN curl -L -o llama-server \
-    https://github.com/ggml-org/llama.cpp/releases/latest/download/llama-server-linux-x86_64 \
+    https://github.com/ggml-org/llama.cpp/releases/latest/download/llama-server-linux-aarch64 \
     && chmod +x llama-server
 
 # Download small GGUF model
